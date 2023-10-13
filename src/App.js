@@ -2,6 +2,8 @@ import { Component } from "react";
 
 import "./App.css";
 import { getDefaultNormalizer } from "@testing-library/react";
+import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -25,20 +27,18 @@ class App extends Component {
       );
   }
 
-
   onSearchChange = (event) => {
     const searchValue = event.target.value.toLocaleLowerCase();
     this.setState(() => {
       return { searchField: searchValue };
     });
-  }
-
+  };
 
   render() {
-    console.log("render");
+    console.log("render from app.js");
 
-    const { persons, searchField } = this.state
-    const { onSearchChange } = this
+    const { persons, searchField } = this.state;
+    const { onSearchChange } = this;
 
     const filteredPeople = persons.filter((person) => {
       return person.name.toLocaleLowerCase().includes(searchField);
@@ -46,17 +46,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          className="search-box"
-          type="search"
-          placeholder="search monsters"
-          id="search-box"
-          onChange={ onSearchChange }
+        <SearchBox
+          onChangeHandler={onSearchChange}
+          className='search-box'
+          placeholder='search people'
         />
-
-        {filteredPeople.map((person) => {
-          return <h1 key={person.id}>{person.name}</h1>;
-        })}
+        <CardList people={filteredPeople} />
       </div>
     );
   }
