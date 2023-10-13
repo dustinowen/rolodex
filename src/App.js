@@ -9,7 +9,8 @@ class App extends Component {
     super()
 
     this.state = {
-      monsters: [],
+      persons: [],
+      searchField: '',
     }
     console.log('constructor')
   }
@@ -19,22 +20,35 @@ class App extends Component {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => this.setState(() => {
-        return { monsters: users }
-      },
-        () => { console.log("state", this.state) }
+        return { persons: users }
+      }
       ))
   }
   
   render() {
     console.log('render')
+
+
+    const filteredPeople = this.state.persons.filter((person) => {
+      return person.name.toLocaleLowerCase().includes(this.state.searchField)
+    })
+   
     return (
       <div className="App">
 
-        <input className='search-box' type='search' placeholder='search monsters' />
+        <input className='search-box' type='search' placeholder='search monsters' id='search-box' onChange={(event) => {
+          const searchValue = event.target.value.toLocaleLowerCase()
+          this.setState(
+            () => {
+              return { searchField: searchValue }
+            }
+          )
+        }}
+        />
 
         {
-          this.state.monsters.map((monster => {
-            return <h1 key={monster.id}>{monster.name}</h1>
+          filteredPeople.map((person => {
+            return <h1 key={person.id}>{person.name}</h1>
         }))
         }
 
