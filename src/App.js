@@ -1,9 +1,8 @@
 import { Component } from "react";
-
-import "./App.css";
-import { getDefaultNormalizer } from "@testing-library/react";
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
+
+import "./App.css";
 
 class App extends Component {
   constructor() {
@@ -13,17 +12,16 @@ class App extends Component {
       persons: [],
       searchField: "",
     };
-    console.log("constructor");
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("https://randomuser.me/api/?results=50")
       .then((response) => response.json())
-      .then((users) =>
+      .then((data) =>
         this.setState(() => {
-          return { persons: users };
+          return { persons: data.results };
         })
+        
       );
   }
 
@@ -35,21 +33,19 @@ class App extends Component {
   };
 
   render() {
-    console.log("render from app.js");
-
     const { persons, searchField } = this.state;
     const { onSearchChange } = this;
 
     const filteredPeople = persons.filter((person) => {
-      return person.name.toLocaleLowerCase().includes(searchField);
+      return person.name.first.toLocaleLowerCase().includes(searchField.toLocaleLowerCase());
     });
 
     return (
       <div className="App">
         <SearchBox
           onChangeHandler={onSearchChange}
-          className='search-box'
-          placeholder='search people'
+          className="monster-search-box"
+          placeholder="search people"
         />
         <CardList people={filteredPeople} />
       </div>

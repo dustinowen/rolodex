@@ -1,14 +1,15 @@
 import { Component } from "react";
+import Card from "../card-container/card-container.component";
+import './card-list.styles.css'
 
 class CardList extends Component {
-    render() {
-      console.log('render from card-list')
+  render() {
     const { people } = this.props;
 
     return (
-      <div>
+        <div className="card-list">
         {people.map((person) => {
-          return <h1 key={person.id}>{person.name}</h1>;
+            return <Card person={person} />;
         })}
       </div>
     );
