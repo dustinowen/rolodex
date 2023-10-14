@@ -15,11 +15,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("https://randomuser.me/api/?results=50")
+    fetch("https://randomuser.me/api/?results=100")
       .then((response) => response.json())
-      .then((data) =>
+      .then((jsonResults) =>
         this.setState(() => {
-          return { persons: data.results };
+          return { persons: jsonResults.results };
         })
         
       );

@@ -3,7 +3,7 @@ import './search-box.styles.css'
 
 class SearchBox extends Component {
   render() {
-    const { onChangeHandler, className, placeholder } = this.props;
+    const { onChangeHandler, placeholder } = this.props;
 
     return (
       <input
